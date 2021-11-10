@@ -1,6 +1,12 @@
 #include<vector>
 using namespace std;
 
+struct ListNode {
+	int val;
+	ListNode *next;
+	ListNode(int x) :val(x), next(nullptr) {}
+};
+
 class TwoPointers {
 public:
 	static void TwoSum(vector<int>& nums, const int & sum) {
@@ -32,5 +38,21 @@ public:
 		}
 		while (j >= 0)
 			nums1[j--] = nums2[j];
+	}
+
+	static ListNode *detectCycle(ListNode *head) {
+		ListNode *fast = head, *slow = head;
+		do{
+			if (!fast || !fast->next)
+				return nullptr;
+			fast = fast->next->next;
+			slow = slow->next;
+		} while (fast != slow);
+		fast = head;
+		while (fast != slow) {
+			fast = fast->next;
+			slow = slow->next;
+		}
+		return fast;
 	}
 };
